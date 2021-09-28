@@ -10,7 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from datetime import timedelta
+from dotenv import load_dotenv
 from pathlib import Path
+import os
+from os.path import join
+
+# Load environment file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f0&b6iewgj2l712r4vs6yunh*hzfnhrxidn0q6-9+2h$(ea9q_'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -47,6 +54,7 @@ INSTALLED_APPS = [
 
     # Custom apps
     'account',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -139,12 +147,47 @@ AUTH_USER_MODEL = 'account.Account'
 
 # Rest framework
 REST_FRAMEWORK = {
+    'PAGE_SIZE': 30,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
 
+# JWT
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('Bearer', 'JWT'),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIEFTIME': timedelta(days=1),
+    'AUTH_TOKEN_CLASSES': (
+        'rest_framework_simplejwt.tokens.AccessToken',
+    )
+}
+
 # Djoser
 DJOSER = {
-    #'SEND_CONFIRMATION_EMAIL': True,
+    'LOGIN_FIELD': 'email',
+
+    # Account create
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    
+    # Account activation
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+
+    # Serializers
+    'SERIALIZERS': {
+        'user_create': 'account.serializers.AccountCreateSerializer',
+        'user': 'account.serializers.AccountCreateSerializer',
+        'current_user': 'account.serializers.AccountCreateSerializer',
+        'user_delete': 'djoser.serializers.UserDeleteSerializer'
+    }
 }
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
