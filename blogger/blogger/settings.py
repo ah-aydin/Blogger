@@ -148,6 +148,7 @@ AUTH_USER_MODEL = 'account.Account'
 # Rest framework
 REST_FRAMEWORK = {
     'PAGE_SIZE': 30,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
