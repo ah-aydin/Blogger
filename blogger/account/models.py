@@ -43,6 +43,7 @@ class Account(AbstractBaseUser):
     date_joined     = models.DateField(verbose_name='date joined', auto_now_add=True, editable=False)
     last_login      = models.DateField(verbose_name='last login', auto_now=True, editable=False)
     blog_count      = models.IntegerField(verbose_name='blog count', editable=False, default=0)
+    follower_count  = models.IntegerField(editable=False, default=0)
 
     # Permissions
     is_active       = models.BooleanField(verbose_name='is active', default=False)
@@ -62,3 +63,10 @@ class Account(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+
+class Follow(models.Model):
+    follower        = models.ForeignKey(Account, related_name='follows', null=False, editable=False, on_delete=models.CASCADE)
+    follows         = models.ForeignKey(Account, related_name='followers', null=False, editable=False, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.follower} - {self.follows}'

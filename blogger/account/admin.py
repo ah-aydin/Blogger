@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Account
+from .models import Account, Follow
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
@@ -18,4 +18,18 @@ class AccountAdmin(admin.ModelAdmin):
         ( "Permissions", {
             'fields': ('is_active', 'is_staff', 'is_admin')
         })
+    )
+
+@admin.register(Follow)
+class FollowAdmin(admin.ModelAdmin):
+    search_fields = (
+        'follower__email', 'follower__name', 'follower__last_name',
+        'follows__email', 'follows__name', 'follows__last_name'
+    )
+
+    readonly_fields = ('follower', 'follows')
+    fieldsets = (
+        (None, {
+            'fields': ('follower', 'follows')
+        }),
     )

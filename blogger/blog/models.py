@@ -23,3 +23,8 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    author          = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    blog            = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    body            = models.TextField()
