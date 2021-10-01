@@ -4,7 +4,7 @@ from .models import Blog, Tag
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ('name',)
+        fields = ('url', 'id', 'name')
 
 class BlogSerializer(serializers.HyperlinkedModelSerializer):
     author_url = serializers.HyperlinkedRelatedField(
