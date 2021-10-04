@@ -25,6 +25,6 @@ class Blog(models.Model):
         return self.title
 
 class Comment(models.Model):
-    author          = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    blog            = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    author          = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.PROTECT)
+    blog            = models.ForeignKey(Blog, related_name='comments', on_delete=models.CASCADE)
     body            = models.TextField()

@@ -1,9 +1,9 @@
-from rest_framework import generics, permissions, serializers
+from django.conf import settings
+from rest_framework import generics, permissions
 
-from .models import Blog, Tag
-from .serializers import BlogSerializer, TagSerializer
+from .models import Blog, Comment, Tag
+from .serializers import BlogSerializer, TagSerializer, CommentSerializer
 from .permissions import IsOwnerOrReadOnly, ReadOnly
-
 
 class BlogList(generics.ListCreateAPIView):
     """
@@ -33,15 +33,21 @@ class BlogList(generics.ListCreateAPIView):
         # Add the tags
         for tag in tags:
             try:
+                # Add the tag if it exists
                 blog.tags.add(Tag.objects.get(name=tag))
             except Exception:
-                pass
+                try:
+                    # Add the tag if it does not exist
+                    blog.tags.add(Tag.objects.create(name=tag))
+                except Exception:
+                    pass
         blog.save()
 
 class BlogDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     GET - Returns detailed view of the given blog
-    PUT - Updates the blog if authenticated. Required fileds ('title', 'slug')
+    PUT - Updates the blog if authenticated and owner. Required fileds ('title', 'slug')
+    DELETE - Deletes the blog if authenticated and owner
     """
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Blog.objects.all()
@@ -56,7 +62,6 @@ class TagList(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
-
 class TagDetail(generics.RetrieveAPIView):
     """
     GET - Returns the tag given the id
@@ -64,4 +69,46 @@ class TagDetail(generics.RetrieveAPIView):
     permission_classes = [ReadOnly]
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
+class BlogComments(generics.ListCreateAPIView):
+    """
+    GET - Lists comments of the given blog
+    POST - Creates a new comment if logged in
+    """
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = CommentSerializer
+    def get_queryset(self):
+        try:
+            return Comment.objects.filter(blog__pk=self.kwargs['pk'])
+        except Exception:
+            return []
     
+    def perform_create(self, serializer):
+        """
+        Override the default create behaviour
+        """
+        data = self.request.data
+        author = self.request.user
+        body = data['body']
+        blog_id = self.kwargs['pk']
+
+        try:
+            blog = Blog.objects.get(pk=blog_id)
+        except Exception:
+            raise Exception("Blog with the given id does not exist")
+
+        Comment.objects.create(
+            author=author,
+            blog=blog,
+            body=body
+        )
+
+class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    GET - Returns detailed view of the given blog
+    PUT - Updates the blog if authenticated. Required fileds ('body')
+    DELETE - Deletes the comment if authenticated and owner
+    """
+    permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
