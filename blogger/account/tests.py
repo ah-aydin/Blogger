@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from .test_helpers import get_client, get_client_authenticated
-from .models import Account, Follow
+from .models import Follow
 
 class AccountTests(APITestCase):
     def setUp(self):

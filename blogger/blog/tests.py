@@ -1,5 +1,3 @@
-from logging import StringTemplateStyle
-from django.http import request, response
 from django.urls import reverse
 from django.utils import timezone
 from rest_framework import status

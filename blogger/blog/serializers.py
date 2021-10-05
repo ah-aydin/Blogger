@@ -20,7 +20,9 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
         fields = (
             'url', 'id', 'title', 'subtitle', 'slug',
             'body', 'date_created', 'date_modified',
-            'publish_date', 'published', 'author_url', 'comments_url',
+            'publish_date', 'published', 
+            'author_url',
+            'comments_url',
             'tags'
         )
 
@@ -38,5 +40,8 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Comment
         fields = (
-            'id', 'author_url', 'blog_url', 'body'
+            'id', 
+            'author_url',
+            'blog_url', 
+            'body'
         )

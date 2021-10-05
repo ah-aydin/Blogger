@@ -1,7 +1,7 @@
 from .models import Account, Follow
 from .serializers import AccountSerializer, AccountFollowerSerializer, AccountFollowingSerializer
 
-from rest_framework import generics, permissions, serializers
+from rest_framework import generics, permissions, filters
 from rest_framework.response import Response
 
 class AccountList(generics.ListAPIView):
@@ -11,6 +11,8 @@ class AccountList(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['email', 'name', 'last_name']
 
 class AccountDetail(generics.RetrieveAPIView):
     """

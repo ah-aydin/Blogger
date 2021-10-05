@@ -6,7 +6,7 @@ urlpatterns = [
     path('', v.BlogList.as_view(), name='blog-list'),
     path('<int:pk>/', v.BlogDetail.as_view(), name='blog-detail'),
     # Comments
-    path('<int:pk>/comments/', v.BlogComments.as_view(), name='blog-comment-list'),
+    path('<int:pk>/comments/', v.BlogCommentList.as_view(), name='blog-comment-list'),
     path('comment/<int:pk>/', v.CommentDetail.as_view(), name='comment-detail'),
     
     # Tag

@@ -1,5 +1,5 @@
 from django.conf import settings
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 
 from .models import Blog, Comment, Tag
 from .serializers import BlogSerializer, TagSerializer, CommentSerializer
@@ -13,10 +13,13 @@ class BlogList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['title', 'body', 'author__email']
 
     def perform_create(self, serializer):
         """
         Override the default create behaviour to add in the tags
+        and increment user blog count
         """
         data = self.request.data
         tags = data['tag_names']
@@ -30,6 +33,11 @@ class BlogList(generics.ListCreateAPIView):
             body=data['body'],
             publish_date=data['publish_date']
         )
+
+        # Increment user blog count
+        self.request.user.blog_count += 1
+        self.request.user.save()
+
         # Add the tags
         for tag in tags:
             try:
@@ -53,6 +61,14 @@ class BlogDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
 
+    def perform_destroy(self, instance):
+        """
+        Add in decrementation of user blog count
+        """
+        self.request.user.blog_count -= 1
+        self.request.user.save()
+        return super().perform_destroy(instance)
+
 class TagList(generics.ListCreateAPIView):
     """
     GET - Returns a list of all available tags
@@ -61,6 +77,8 @@ class TagList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name']
 
 class TagDetail(generics.RetrieveAPIView):
     """
@@ -70,13 +88,15 @@ class TagDetail(generics.RetrieveAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
-class BlogComments(generics.ListCreateAPIView):
+class BlogCommentList(generics.ListCreateAPIView):
     """
     GET - Lists comments of the given blog
     POST - Creates a new comment if logged in
     """
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = CommentSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['body', 'author__name']
     def get_queryset(self):
         try:
             return Comment.objects.filter(blog__pk=self.kwargs['pk'])
@@ -118,6 +138,8 @@ class AccountBlogList(generics.ListAPIView):
     GET - Returns the list of blogs posted by the account, provided by the id
     """
     serializer_class = BlogSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['title', 'body']
     def get_queryset(self):
         return Blog.objects.filter(author__pk=self.kwargs['pk'])
 
@@ -126,5 +148,7 @@ class AccountCommentList(generics.ListAPIView):
     GET - Returns the list of comments posted by the account, provided by the id
     """
     serializer_class = CommentSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['body']
     def get_queryset(self):
         return Comment.objects.filter(author__pk=self.kwargs['pk'])
