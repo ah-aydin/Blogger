@@ -112,3 +112,19 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+
+class AccountBlogList(generics.ListAPIView):
+    """
+    GET - Returns the list of blogs posted by the account, provided by the id
+    """
+    serializer_class = BlogSerializer
+    def get_queryset(self):
+        return Blog.objects.filter(author__pk=self.kwargs['pk'])
+
+class AccountCommentList(generics.ListAPIView):
+    """
+    GET - Returns the list of comments posted by the account, provided by the id
+    """
+    serializer_class = CommentSerializer
+    def get_queryset(self):
+        return Comment.objects.filter(author__pk=self.kwargs['pk'])

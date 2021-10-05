@@ -234,7 +234,6 @@ class CommentTests(APITestCase):
             body="comment2 - blog1"
         )
         
-    # TODO Create tests for the POST and GET requests
     def test_get_comments(self):
         """
         Ensure that comments of a blog can be retrieved
@@ -303,3 +302,77 @@ class CommentTests(APITestCase):
         self.assertEqual(request.status_code, status.HTTP_200_OK)
         comment = Comment.objects.get(pk=1)
         self.assertEqual(comment.body, "CHANGE DIS")
+
+class AccountBlogTCommentest(APITestCase):
+    """
+    Tests for blog/comment views of an account provided by the ID
+    """
+    def setUp(self):
+        self.client_authenticated, self.account1 = get_client_authenticated()
+        self.client, self.account2 = get_client()
+
+        # Create 3 blogs, 2 for account1, 1 for account2
+        self.blog1 = Blog.objects.create(
+            title="title1",
+            subtitle="subtitle1",
+            slug="slug1",
+            body="body1",
+            publish_date=timezone.now(),
+            author=self.account1
+        )
+
+        self.blog2 = Blog.objects.create(
+            title="title2",
+            subtitle="subtitle2",
+            slug="slug2",
+            body="body2",
+            publish_date=timezone.now(),
+            author=self.account2,
+        )
+
+        self.blog3 = Blog.objects.create(
+            title="title3",
+            subtitle="subtitle3",
+            slug="slug3",
+            body="bodt3",
+            publish_date=timezone.now(),
+            author=self.account1
+        )
+
+        self.comment1 = Comment.objects.create(
+            author=self.account1,
+            blog=self.blog1,
+            body="comment1 - blog1"
+        )
+        self.comment2 = Comment.objects.create(
+            author=self.account1,
+            blog=self.blog1,
+            body="comment2 - blog1"
+        )
+        self.comment3 = Comment.objects.create(
+            author=self.account2,
+            blog=self.blog2,
+            body="comment3 - blog2"
+        )
+    
+    def test_account_blog_list(self):
+        """
+        Ensure that all the blogs of the account are retrieved,
+        given the id of the account
+        """
+        response = self.client.get(reverse('account-blog-list', kwargs={'pk': 1}))
+        data = response.data['results']
+        self.assertEqual(len(data), 2)
+        self.assertEqual(data[0]['title'], "title1")
+        self.assertEqual(data[1]['title'], "title3")
+    
+    def test_account_comment_list(self):
+        """
+        Ensure that all the comments of the account are retrieved,
+        given the id of the account
+        """
+        response = self.client.get(reverse('account-comment-list', kwargs={'pk': 1}))
+        data = response.data['results']
+        self.assertEqual(len(data), 2)
+        self.assertEqual(data[0]['body'], "comment1 - blog1")
+        self.assertEqual(data[1]['body'], "comment2 - blog1")

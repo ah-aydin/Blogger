@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # 3'rd party apps
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
     'djoser',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
@@ -149,6 +150,9 @@ AUTH_USER_MODEL = 'account.Account'
 REST_FRAMEWORK = {
     'PAGE_SIZE': 30,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'DEFAULT_FILTER_BACKENDS': (
+    #     'django_filters.rest_framework.DjangoFilterBackend',
+    # ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
