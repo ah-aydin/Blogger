@@ -3,8 +3,15 @@ Blogging app
 
 Basic blog app made using django python for backend and react for frontend
 
-Python environment
+Setting up python environment
 ------------------
+
+First create a python virtual envornment on the root directory of the project, then run this command after activation:
+
+    pip install django djangorestframework django-filter djoser djangorestframework_simplejwt python-dotenv
+
+### End result
+
     asgiref                       3.4.1    
     certifi                       2021.5.30
     cffi                          1.14.6
@@ -41,28 +48,48 @@ Python environment
     uritemplate                   3.0.1
     urllib3                       1.26.7
 
-Runnin the local server
+Setting up React/Redux environment
+----------------------------------
+
+In the ``./frontend`` folder run the command
+
+    npx create-react-app
+
+Then install the required packages
+
+    npm install react-router-dom react-redux redux redux-thunk redux-devtools-extension axios
+
+In order to build the frontend and move it to the django server use
+
+    npm run build
+
+Running the local server
 ------------------------
 
-Activate environment:
+### ``.env`` file
 
-.. code-block:: sh
+In order to run the project, a ``.env`` file at ``./blogger/blogger`` is needed. This will hold crutial information like the ``secret key``, ``email host user`` and ``email host password``. The file should contain variables as follows:
+
+    SECRET_KEY = "You're super duper secret key"
+    EMAIL_HOST_USER = "You're email address for sending out activation/confimation mails"
+    EMAIL_HOST_PASSWORD = "You're email's application password"
+
+### Starting the server
+
+Activate environment:
 
     source ./env/Scripts/activate
 
 Change directory to backend app:
 
-.. code-block:: sh
-
     cd ./blogger
 
-Run local server
+Make migrations (for the first run only)
 
-.. code-block:: sh
+    python ./manage.py migrate
+
+Run local server
 
     python ./manage.py runserver
 
 Go to http://localhost:8000/ on browser
-
-Url's
------

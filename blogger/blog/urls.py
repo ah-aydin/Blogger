@@ -13,7 +13,7 @@ urlpatterns = [
     path('tag/', v.TagList.as_view(), name='tag-list'),
     path('tag/<int:pk>/', v.TagDetail.as_view(), name='tag-detail'),
 
-    # TODO add in accounts blogs and accounts comments in here
+    # Account blogs and comments
     path('account/<int:pk>/', v.AccountBlogList.as_view(), name='account-blog-list'),
     path('account/<int:pk>/comments/', v.AccountCommentList.as_view(), name='account-comment-list')
 ]
