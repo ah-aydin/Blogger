@@ -66,13 +66,19 @@ In order to build the frontend and move it to the django server use
 Running the local server
 ------------------------
 
-### ``.env`` file
+### ``.env`` file for backend
 
 In order to run the project, a ``.env`` file at ``./blogger/blogger`` is needed. This will hold crutial information like the ``secret key``, ``email host user`` and ``email host password``. The file should contain variables as follows:
 
     SECRET_KEY = "You're super duper secret key"
     EMAIL_HOST_USER = "You're email address for sending out activation/confimation mails"
     EMAIL_HOST_PASSWORD = "You're email's application password"
+
+### ``.env`` file for frontend
+
+In adition to the backend ``.env`` file we need to add one more at ``./frontend``. This file will contain the ``REACT_APP_URL``, which should hold the url address for you're backend server. If you run it locally with default settings, this should be as follows
+
+    REACT_APP_URL = http://localhost:8000/
 
 ### Starting the server
 
@@ -91,5 +97,9 @@ Make migrations (for the first run only)
 Run local server
 
     python ./manage.py runserver
+
+Build the react app to make sure the latest version is in the backend. Execute this command at the ``./frontend`` directory.
+
+    npm run build
 
 Go to http://localhost:8000/ on browser
