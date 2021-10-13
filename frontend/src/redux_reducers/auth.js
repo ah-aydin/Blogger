@@ -87,6 +87,11 @@ export default function (state=initialState, action) {
                 errors: [],
                 successes: ['Logged out succesfully']
             };
+        case 'ERROR':
+            return {
+                ...state,
+                errors: payload
+            };
         default:
             return state
     }

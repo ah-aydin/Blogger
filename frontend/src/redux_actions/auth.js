@@ -34,7 +34,7 @@ export const login = (email, password) => async dispatch => {
         console.log(e);
         dispatch({
             type: LOGIN_FAIL,
-            payload: e
+            payload: e.response.data
         });
     }
 }
@@ -46,27 +46,34 @@ export const login = (email, password) => async dispatch => {
  * @param last_name last name of the user
  * @param password password of the user
  * @param re_password password check field
- * @returns 
  */
 export const signup = (email, name, last_name, password, re_password) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
+    if (password !== re_password) {
+        dispatch({
+            type: 'ERROR',
+            payload: ['Password\'s to not match']
+        });
+    }
+    else {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        const body = JSON.stringify({email, name, last_name, password, re_password});
+    
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_URL}auth/users/`, body, config);
+            dispatch({
+                type: SIGNUP_SUCCESS,
+                payload: response.data
+            });
+        } catch (e) {
+            dispatch({
+                type: SIGNUP_FAIL,
+                payload: e.response.data
+            });
         }
-    };
-    const body = JSON.stringify({email, name, last_name, password, re_password});
-
-    try {
-        const response = await axios.post(`${process.env.REACT_APP_URL}auth/users/`, body, config);
-        dispatch({
-            type: SIGNUP_SUCCESS,
-            payload: response.data
-        });
-    } catch (e) {
-        dispatch({
-            type: SIGNUP_FAIL,
-            payload: e.response.data
-        });
     }
 }
 
@@ -74,7 +81,6 @@ export const signup = (email, name, last_name, password, re_password) => async d
  * Activate the user that the parameters belong to
  * @param uid the uid snached from the url
  * @param token the token snached from the url
- * @returns 
  */
 export const activate = (uid, token) => async dispatch => {
     const config = {

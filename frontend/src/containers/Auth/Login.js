@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { login } from '../../redux_actions/auth';
 
+import Logs from '../Logs/Logs';
+
 const Login = ({ login, isAuthenticated }) => {
     // Store the data from the form
     const [formData, setFormData] = useState({
@@ -46,6 +48,7 @@ const Login = ({ login, isAuthenticated }) => {
                 <button type='submit'>Login</button>
                 <p>Don't have an account? <Link to='/signup'>Sign up</Link></p>
             </form>
+            <Logs />
         </div>
     );
 };
