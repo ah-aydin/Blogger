@@ -5,7 +5,9 @@ import {
     SIGNUP_FAIL,
     ACTIVATE_SUCCESS,
     ACTIVATE_FAIL,
-    LOGOUT
+    LOGOUT,
+    USER_LOAD_SUCCESS,
+    USER_LOAD_FAIL
 } from './auth_types';
 
 const axios = require('axios').default;
@@ -30,6 +32,8 @@ export const login = (email, password) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: response.data
         });
+        // Load in user data after loggin in
+        dispatch(load_user());
     } catch (e) {
         dispatch({
             type: LOGIN_FAIL,
@@ -112,4 +116,34 @@ export const logout = () => async dispatch => {
         type: LOGOUT,
         payload: null
     });
+}
+
+/**
+ * Loads the user that is the owner of the stored access token
+ */
+export const load_user = () => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('access')}`
+            }
+        };
+
+        try{
+            const response = await axios.get(`${process.env.REACT_APP_URL}auth/users/me/`, config);
+            dispatch({
+                type: USER_LOAD_SUCCESS,
+                payload: response.data
+            });
+        } catch (e) {
+            dispatch({
+                type: USER_LOAD_FAIL,
+                payload: e.response.data
+            });
+        }
+    } else {
+        dispatch({
+            type: USER_LOAD_FAIL
+        });
+    }
 }

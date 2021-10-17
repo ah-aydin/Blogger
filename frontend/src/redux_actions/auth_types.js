@@ -8,3 +8,6 @@ export const ACTIVATE_SUCCESS = 'ACTIVATE_SUCCESS';
 export const ACTIVATE_FAIL = 'ACTIVATE_FAIL';
 
 export const LOGOUT = 'LOGOUT';
+
+export const USER_LOAD_SUCCESS = 'USER_LOAD_SUCCESS';
+export const USER_LOAD_FAIL = 'USER_LOAD_FAIL';

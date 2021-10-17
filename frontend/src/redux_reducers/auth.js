@@ -5,7 +5,10 @@ import {
     SIGNUP_FAIL,
     ACTIVATE_SUCCESS,
     ACTIVATE_FAIL,
-    LOGOUT
+    LOGOUT,
+
+    USER_LOAD_SUCCESS,
+    USER_LOAD_FAIL
 } from '../redux_actions/auth_types';
 
 const initialState = {
@@ -29,6 +32,7 @@ const formatErrors = (errors) => {
 const removeItems = () => {
     localStorage.removeItem('access');
     localStorage.removeItem('refresh');
+    localStorage.removeItem('user');
 };
 
 export default function (state=initialState, action) {
@@ -59,24 +63,24 @@ export default function (state=initialState, action) {
             return {
                 ...state,
                 successes: ['An activation email has been sent.']
-            }
+            };
         case SIGNUP_FAIL:
             return {
                 ...state,
                 successes: [],
                 errors: formatErrors(payload)
-            }
+            };
         case ACTIVATE_SUCCESS:
             return {
                 ...state,
                 successes: ['Account activated succesfully']
-            }
+            };
         case ACTIVATE_FAIL:
             return {
                 ...state,
                 errors: formatErrors(payload),
                 successes: []
-            }
+            };
         case LOGOUT:
             removeItems();
             return {
@@ -86,6 +90,19 @@ export default function (state=initialState, action) {
                 refresh: '',
                 errors: [],
                 successes: ['Logged out succesfully']
+            };
+        case USER_LOAD_SUCCESS:
+            localStorage.setItem("user", payload);
+            return {
+                ...state,
+                user: payload
+            };
+        case USER_LOAD_FAIL:
+            return {
+                ...state,
+                isAuthenticated: false,
+                user: null,
+                successes: [ ]
             };
         case 'ERROR':
             return {

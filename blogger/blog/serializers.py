@@ -32,6 +32,9 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
         source='author',
         read_only=True
     )
+    author_name = serializers.CharField(source='author.name', required=False)
+    author_last_name = serializers.CharField(source='author.last_name', required=False)
+    author_id = serializers.IntegerField(source='author.id', required=False)
     blog_url = serializers.HyperlinkedRelatedField(
         view_name='blog-detail',
         source='blog',
@@ -43,5 +46,8 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
             'id', 
             'author_url',
             'blog_url', 
-            'body'
+            'body',
+            'author_id',
+            'author_name',
+            'author_last_name'
         )
