@@ -31,7 +31,6 @@ export const login = (email, password) => async dispatch => {
             payload: response.data
         });
     } catch (e) {
-        console.log(e);
         dispatch({
             type: LOGIN_FAIL,
             payload: e.response.data
@@ -91,7 +90,7 @@ export const activate = (uid, token) => async dispatch => {
     const body = JSON.stringify({uid, token});
 
     try {
-        const response = await axios.post(`${process.env.REACT_APP_URL}auth/users/activation/`, body, config);
+        await axios.post(`${process.env.REACT_APP_URL}auth/users/activation/`, body, config);
         dispatch({
             type: ACTIVATE_SUCCESS,
             payload: null
@@ -112,5 +111,5 @@ export const logout = () => async dispatch => {
     dispatch({
         type: LOGOUT,
         payload: null
-    })
+    });
 }

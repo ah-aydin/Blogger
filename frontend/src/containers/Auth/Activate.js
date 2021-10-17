@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { activate } from '../../redux_actions/auth';
@@ -19,6 +19,7 @@ const Activate = ({ activate, match }) => {
             <h1>Activate you're account</h1>
             <button onClick={activate_account}>Activate</button>
             <Logs />
+            <Link to='/'> Go back to home page </Link>
         </div>
     );
 };
