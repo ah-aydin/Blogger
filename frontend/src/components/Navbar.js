@@ -10,12 +10,12 @@ const Navbar = ({ logout, isAuthenticated }) => {
         if (!isAuthenticated) 
             return (
                 <Fragment>
-                    <Link to="/login">
+                    <li><Link to='/login'>
                         <span>Login</span>
-                    </Link>
-                    <Link to="/signup">
+                    </Link></li>
+                    <li><Link to='/signup'>
                         <span>Sign up</span>
-                    </Link>
+                    </Link></li>
                 </Fragment>
             );
         return (
@@ -23,13 +23,25 @@ const Navbar = ({ logout, isAuthenticated }) => {
         );
     }
 
-    const authLinks = () => {
+    const authLinks1 = () => {
+        if (isAuthenticated)
+            return (
+                <Fragment>
+                    <li><Link to='/feed'>
+                        <span>Feed</span>
+                    </Link></li>
+                </Fragment>
+            );
+        return (<Fragment />)
+    }
+
+    const authLinks2 = () => {
         if (isAuthenticated) 
             return (
                 <Fragment>
-                    <Link onClick={ logout }>
+                    <li><Link onClick={ logout }>
                         <span>Logout</span>
-                    </Link>
+                    </Link></li>
                 </Fragment>
             );
         return (
@@ -40,9 +52,12 @@ const Navbar = ({ logout, isAuthenticated }) => {
     return (
         <div>
             <ul>
-                { authLinks() }
                 { guestLinks() }
-                <div>
+                { authLinks1() }
+                <li><Link to='/discover'>
+                    <span>Discover</span>
+                </Link></li>
+                <li>
                     Search
                     <ul>
                         <li><Link to='/account/search'><span>Account search</span></Link></li>
@@ -50,7 +65,8 @@ const Navbar = ({ logout, isAuthenticated }) => {
                     <ul>
                         <li><Link to='/blog/search'><span>Blog search</span></Link></li>
                     </ul>
-                </div>
+                </li>
+                { authLinks2() }
             </ul>
         </div>
     )

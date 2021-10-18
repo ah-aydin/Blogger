@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -8,6 +8,11 @@ import Layout from './hocs/Layout';
 import Login from './containers/Auth/Login';
 import Signup from './containers/Auth/SignUp';
 import Activate from './containers/Auth/Activate';
+
+// Account component imports
+import AccountSearch from './containers/Account/AccountSearch';
+import MyAccount from './containers/Account/MyAccount';
+import AccountDetail from './containers/Account/AccountDetail';
 
 // Blog component imports
 import BlogSearch from './containers/Blog/BlogSearch';
@@ -21,8 +26,11 @@ function App() {
       <Router>
         <Layout>
           <Switch>
-            { /* Feed */ }
             <Route exact path='/' />
+
+            { /* Feed */ }
+            <Route exact path='/feed' />
+            <Route exact path='/discover' />
 
             { /* Auth routes */ }
             <Route exact path='/login'                component={ Login }/>
@@ -30,15 +38,14 @@ function App() {
             <Route exact path='/activate/:uid/:token' component={ Activate }/>
 
             { /* Account routes */ }
-            <Route exact path='/account/search' />
-            <Route exact path='/account/details' />
-            <Route exact path='/account/:id' />
-            <Route exact path='/account/:id/blogs' />
-            <Route exact path='/account/:id/comments' />
+            <Route exact path='/account/search'       component={ AccountSearch }/>
+            <Route exact path='/account/details'      component={ MyAccount} />
+            <Route exact path='/account/:id'          component={ AccountDetail} />
 
             { /* Blog routes */ }
             <Route exact path='/blog/search'          component={ BlogSearch }/>
             <Route exact path='/blog/:id'             component={ Blog }/>
+            <Route exact path='/blog/create' />
 
             { /* Comment routes */ }
             <Route exact path='/comment/:id' />

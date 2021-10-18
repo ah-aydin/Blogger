@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import { get_blog, get_blog_comments, get_blog_comments_next, post_comment, delete_comment } from '../../redux_actions/blog';
 
-import Logs from '../Logs/Logs';
-
 const Blog = ({ match,
     get_blog, get_blog_comments, get_blog_comments_next, post_comment, delete_comment,
     blog, comments, isAuthenticated, user, change
@@ -60,7 +58,7 @@ const Blog = ({ match,
      */
     const isOwnerOfComment = (comment_author_id, comment_id) => {
         if (isAuthenticated) {
-            if (user.id == comment_author_id) {
+            if (user.id === comment_author_id) {
                 return (
                     <button onClick={ () => {
                             delete_comment(`${comment_id}`);

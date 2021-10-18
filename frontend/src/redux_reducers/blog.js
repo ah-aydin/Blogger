@@ -150,13 +150,13 @@ export default function (state=initialState, action) {
                 ...state,
                 change: state.change + 1
             };
-        case POST_COMMENT_FAIL:
         case DELETE_COMMENT_SUCCESS:
             return {
                 ...state,
                 change: state.change + 1
             };
         case DELETE_COMMENT_FAIL:
+        case POST_COMMENT_FAIL:
         default:
             return state
     }

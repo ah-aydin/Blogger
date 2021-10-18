@@ -27,6 +27,8 @@ class AccountFollowers(generics.ListAPIView):
     Returns a list of the given accounts followers
     """
     serializer_class = AccountFollowerSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['follower__email']
     def get_queryset(self):
         try:
             return Follow.objects.filter(follows__pk=self.kwargs['pk'])
