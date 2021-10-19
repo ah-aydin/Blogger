@@ -17,6 +17,7 @@ import AccountDetail from './containers/Account/AccountDetail';
 // Blog component imports
 import BlogSearch from './containers/Blog/BlogSearch';
 import Blog from './containers/Blog/Blog';
+import BlogCreate from './containers/Blog/BlogCreate';
 
 import store from './store';
 
@@ -43,9 +44,10 @@ function App() {
             <Route exact path='/account/:id'          component={ AccountDetail} />
 
             { /* Blog routes */ }
-            <Route exact path='/blog/search'          component={ BlogSearch }/>
-            <Route exact path='/blog/:id'             component={ Blog }/>
-            <Route exact path='/blog/create' />
+            <Route exact path='/blog/create'          component= { BlogCreate} />
+            <Route exact path='/blog/search'          component={ BlogSearch } />
+            <Route exact path='/blog/:id'             component={ Blog } />
+            
 
             { /* Comment routes */ }
             <Route exact path='/comment/:id' />

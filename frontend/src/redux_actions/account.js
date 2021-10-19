@@ -9,7 +9,11 @@ import {
     GET_ACCOUNT_BLOGS_SUCCESS,
     GET_ACCOUNT_BLOGS_FAIL,
     GET_ACCOUNT_BLOGS_NEXT_SUCCESS,
-    GET_ACCOUNT_BLOGS_NEXT_FAIL
+    GET_ACCOUNT_BLOGS_NEXT_FAIL,
+    GET_ACCOUNT_FOLLOWERS_SUCCESS,
+    GET_ACCOUNT_FOLLOWERS_FAIL,
+    GET_ACCOUNT_FOLLOWERS_NEXT_SUCCESS,
+    GET_ACCOUNT_FOLLOWERS_NEXT_FAIL
 } from './account_types';
 
 /**
@@ -106,12 +110,12 @@ export const get_account_blogs = (email) => async dispatch => {
         dispatch({
             type: GET_ACCOUNT_BLOGS_SUCCESS,
             payload: response.data
-        })
+        });
     } catch (e) {
         dispatch({
             type: GET_ACCOUNT_BLOGS_FAIL,
             payload: e.response
-        })
+        });
     }
 }
 
@@ -160,5 +164,55 @@ export const follow_account = (account_id) => {
         axios.post(`${process.env.REACT_APP_URL}api/account/follow/`, body, config);
     } catch (e) {
         console.log('Follow failed');
+    }
+}
+
+/**
+ * Makes a GET request to get the followers of an account
+ * @param account_id Id of the account 
+ */
+export const get_account_followers = (account_id) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_URL}api/account/${account_id}/followers/`, config);
+        dispatch({
+            type: GET_ACCOUNT_FOLLOWERS_SUCCESS,
+            payload: response.data
+        });
+    } catch (e) {
+        dispatch({
+            type: GET_ACCOUNT_FOLLOWERS_FAIL,
+            payload: e.response
+        });
+    }
+};
+
+/**
+ * Makes a GET request to get the next list of account followers
+ * @param url The url to make the request from 
+ */
+export const get_account_followers_next = (url) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    try {
+        const response = await axios.get(`${url}`, config);
+        dispatch({
+            type: GET_ACCOUNT_FOLLOWERS_NEXT_SUCCESS,
+            payload: response.data
+        });
+    } catch (e) {
+        dispatch ({
+            type: GET_ACCOUNT_FOLLOWERS_NEXT_FAIL,
+            payload: e.response
+        });
     }
 }

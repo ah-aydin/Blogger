@@ -28,10 +28,11 @@ class AccountFollowers(generics.ListAPIView):
     """
     serializer_class = AccountFollowerSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['follower__email']
+    search_fields = ['follower__email', 'follower__follower_count']
     def get_queryset(self):
         try:
-            return Follow.objects.filter(follows__pk=self.kwargs['pk'])
+            # Filter the objects with the given pk then order them according to follower count and name
+            return Follow.objects.filter(follows__pk=self.kwargs['pk']).order_by('-follower__follower_count', 'follower__name', 'follower__last_name')
         except Exception:
             return []
 

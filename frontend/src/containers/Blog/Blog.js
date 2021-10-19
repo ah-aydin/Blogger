@@ -75,19 +75,19 @@ const Blog = ({ match,
      */
     const getComments = () => {
         return (
-            <div>
+            <ul>
                 {
                     comments.results.map((comment, id) => {
                         return (
-                        <div>
+                        <li>
                             <Link to={`/account/${comment.author_id}`}>{comment.author_name} {comment.author_last_name}</Link>
                             <p>{comment.body}</p>
                             { isOwnerOfComment(comment.author_id, comment.id) }
-                        </div>);
+                        </li>);
                     })
                 }
                 {comments.next ? <button onClick={ (e) => get_blog_comments_next(comments.next) }>Load more</button> : <div /> }
-            </div>
+            </ul>
         );
     }
     

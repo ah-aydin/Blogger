@@ -39,6 +39,9 @@ const Navbar = ({ logout, isAuthenticated }) => {
         if (isAuthenticated) 
             return (
                 <Fragment>
+                    <li><Link to='/blog/create'>
+                        <span>Create blog</span>
+                    </Link></li>
                     <li><Link onClick={ logout }>
                         <span>Logout</span>
                     </Link></li>

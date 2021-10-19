@@ -8,12 +8,22 @@ import {
     GET_ACCOUNT_BLOGS_SUCCESS,
     GET_ACCOUNT_BLOGS_FAIL,
     GET_ACCOUNT_BLOGS_NEXT_SUCCESS,
-    GET_ACCOUNT_BLOGS_NEXT_FAIL
+    GET_ACCOUNT_BLOGS_NEXT_FAIL,
+    GET_ACCOUNT_FOLLOWERS_SUCCESS,
+    GET_ACCOUNT_FOLLOWERS_FAIL,
+    GET_ACCOUNT_FOLLOWERS_NEXT_SUCCESS,
+    GET_ACCOUNT_FOLLOWERS_NEXT_FAIL
 } from '../redux_actions/account_types';
 
 const initialState = {
     account: null,
     account_blogs: {
+        count: null,
+        next: null,
+        prev: null,
+        results: []
+    },
+    account_followers: {
         count: null,
         next: null,
         prev: null,
@@ -139,6 +149,49 @@ export default function (state=initialState, action) {
                 successes: [],
                 errors: ['Failed to load blogs']
             };    
+        case GET_ACCOUNT_FOLLOWERS_SUCCESS:
+            return {
+                ...state,
+                account_followers: payload,
+                successes: ['Retrieved followers'],
+                errors: []
+            };
+        case GET_ACCOUNT_FOLLOWERS_FAIL:
+            return {
+                ...state,
+                account_followers: {
+                    count: null,
+                    next: null,
+                    prev: null,
+                    results: []
+                },
+                successes: [],
+                errors: ['Failed to load followers']
+            };
+        case GET_ACCOUNT_FOLLOWERS_NEXT_SUCCESS:
+            return {
+                ...state,
+                account_followers: {
+                    count: payload.count,
+                    next: payload.next,
+                    prev: payload.prev,
+                    results: [...state.account_followers.results, ...payload.results]
+                },
+                successes: ['Retrieved more followers'],
+                errors: []
+            };
+        case GET_ACCOUNT_FOLLOWERS_NEXT_FAIL:
+            return {
+                ...state,
+                account_followers: {
+                    count: null,
+                    next: null,
+                    prev: null,
+                    results: []
+                },
+                successes: [],
+                errors: ['Failed to load followers']
+            };
         default:
             return state
     }
