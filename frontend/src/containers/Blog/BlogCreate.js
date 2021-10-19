@@ -31,13 +31,13 @@ const BlogCreate = ({ isAuthenticated, create_blog }) => {
             <form onSubmit={(e) => onSubmit(e)}>
                 <div>
                     <label>Title</label>
-                    <input type='text' id='title' name='title'
+                    <input type='text' id='title' name='title' placeholder='Title'
                         value={title} onChange={(e) => onChange(e)} required
                     />
                 </div>
                 <div>
                     <label>Subtitle</label>
-                    <input type='text' id='subtitle' name='subtitle'
+                    <input type='text' id='subtitle' name='subtitle' placeholder='Subtitle'
                         value={subtitle} onChange={(e) => onChange(e)} required
                     />
                 </div>

@@ -18,14 +18,15 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 class AccountFollowerSerializer(serializers.HyperlinkedModelSerializer):
-    follower_id = serializers.IntegerField(source='follower.id', required=False)
-    follower_name = serializers.CharField(source='follower.name', required=False)
-    follower_last_name = serializers.CharField(source='follower.last_name', required=False)
-    follower_email = serializers.CharField(source='follower.email', required=False)
+    id = serializers.IntegerField(source='follower.id', required=False)
+    name = serializers.CharField(source='follower.name', required=False)
+    last_name = serializers.CharField(source='follower.last_name', required=False)
+    email = serializers.CharField(source='follower.email', required=False)
+    follower_count = serializers.IntegerField(source='follower.follower_count', required=False)
     class Meta:
         model = Follow
         fields = (
-            'follower', 'follower_name', 'follower_last_name', 'follower_email', 'follower_id'
+            'follower', 'id', 'name', 'last_name', 'email', 'follower_count'
         )
 
 class AccountFollowingSerializer(serializers.HyperlinkedModelSerializer):

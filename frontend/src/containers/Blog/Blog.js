@@ -2,11 +2,13 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { get_blog, get_blog_comments, get_blog_comments_next, post_comment, delete_comment } from '../../redux_actions/blog';
+import { get_blog, get_blog_comments, post_comment } from '../../redux_actions/blog';
+
+import CommentList from '../../components/CommentList';
 
 const Blog = ({ match,
-    get_blog, get_blog_comments, get_blog_comments_next, post_comment, delete_comment,
-    blog, comments, isAuthenticated, user, change
+    get_blog, get_blog_comments, post_comment,
+    blog, comments, isAuthenticated, change
 }) => {
     const blogId = match.params.id;
     const [commentText, setCommentText] = useState('');
@@ -52,44 +54,6 @@ const Blog = ({ match,
         );
     }
 
-    /**
-     * @param comment_author_id Id of the comments author
-     * @returns A delete button if the authenticated user is its owner
-     */
-    const isOwnerOfComment = (comment_author_id, comment_id) => {
-        if (isAuthenticated) {
-            if (user.id === comment_author_id) {
-                return (
-                    <button onClick={ () => {
-                            delete_comment(`${comment_id}`);
-                        }
-                    }>Delete</button>
-                )
-            }
-        }
-        return <Fragment />
-    }
-
-    /**
-     * @returns Display of the comments
-     */
-    const getComments = () => {
-        return (
-            <ul>
-                {
-                    comments.results.map((comment, id) => {
-                        return (
-                        <li>
-                            <Link to={`/account/${comment.author_id}`}>{comment.author_name} {comment.author_last_name}</Link>
-                            <p>{comment.body}</p>
-                            { isOwnerOfComment(comment.author_id, comment.id) }
-                        </li>);
-                    })
-                }
-                {comments.next ? <button onClick={ (e) => get_blog_comments_next(comments.next) }>Load more</button> : <div /> }
-            </ul>
-        );
-    }
     
     return (
         <div>
@@ -104,8 +68,7 @@ const Blog = ({ match,
                     </div>
                     { /* Posting comment section */ }
                     { getCommentPosting() }
-                    { /* Comments that are made so far for the blog */ }
-                    { getComments() }
+                    <CommentList comments={ comments }/>
                 </div>
                 : 
                 <div><p>Blog with the given id does not exist</p></div>
@@ -118,8 +81,7 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
     blog: state.blog.blog,
     comments: state.blog.blog_comments,
-    change: state.blog.change,
-    user: state.auth.user
+    change: state.blog.change
 });
 
-export default connect(mapStateToProps, { get_blog, get_blog_comments, get_blog_comments_next, post_comment, delete_comment } )(Blog);
+export default connect(mapStateToProps, { get_blog, get_blog_comments, post_comment } )(Blog);

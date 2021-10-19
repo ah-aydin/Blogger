@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { search_blogs, search_blogs_next } from '../../redux_actions/blog';
 
+import BlogList from '../../components/BlogList';
+
 const BlogSearch = ({ search_blogs, search_blogs_next, blogs }) => {
     const [searchKeword, setSearchKeword] = useState('');
 
@@ -21,17 +23,7 @@ const BlogSearch = ({ search_blogs, search_blogs_next, blogs }) => {
                 <input type='text' onChange={(e) => onChange(e)}></input>
                 <button type='submit'>Search<i className='bx bx-search'></i></button>
             </form>
-            <ul>
-                {blogs.results.map((blog) => {
-                    return (
-                        <li><Link to={`${blog.id}`}>
-                            <h3>{ blog.title }</h3>
-                            <p>{ blog.subtitle }</p>
-                        </Link></li>
-                    )
-                })}
-            </ul>
-            {blogs.next ? <button onClick={ (e) => search_blogs_next(blogs.next) }>Load more</button> : <div /> }
+            <BlogList blogs={ blogs } next_list={ search_blogs_next }/>
         </div>
     );
 };

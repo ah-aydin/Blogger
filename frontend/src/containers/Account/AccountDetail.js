@@ -9,6 +9,9 @@ import {
     get_account_followers, get_account_followers_next
 } from '../../redux_actions/account';
 
+import AccountList from '../../components/AccountList';
+import BlogList from '../../components/BlogList';
+
 const AccountDetail = ({
     match,
     isAuthenticated, account, blogs, user, followers,
@@ -90,23 +93,6 @@ const AccountDetail = ({
         );
     }
 
-    const getBlogs = () => {
-        return (
-            <ul>
-                {
-                    blogs.results.map((blog, id) => {
-                        return (
-                        <li>
-                            <Link to={`/blog/${blog.id}`}>{blog.title}</Link>
-                            <p>{blog.body}</p>
-                        </li>);
-                    })
-                }
-                {blogs.next ? <li><button onClick={ (e) => get_account_blogs_next(blogs.next) }>Load more</button></li> : <div /> }
-            </ul>
-        );
-    }
-
     return (
         <div>
             {
@@ -114,9 +100,9 @@ const AccountDetail = ({
                 <div>
                     <h1> {account.name} {account.last_name} </h1>
                     { getFollowButton() }
-                    { getFollowers() }
+                    <AccountList accounts={ followers } next_list={ get_account_followers_next } />
                     <h3>Blogs</h3>
-                    { getBlogs(account.email) }
+                    <BlogList blogs={ blogs } next_list={ get_account_blogs_next } />
                 </div>
                 :
                 <div><p>User with the given Id does not exist</p></div>
