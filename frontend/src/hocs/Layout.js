@@ -2,7 +2,7 @@ import React from 'react';
 
 import Navbar from '../components/Navbar';
 
-// TODO Add styling + a navbar
+// TODO Add styling
 const Layout = (props) => {
     return (
         <div>

@@ -4,6 +4,13 @@ import { Provider } from 'react-redux';
 
 import Layout from './hocs/Layout';
 
+import Home from './containers/Home';
+import MyAccount from './containers/MyAccount';
+
+// Feed imports
+import Feed from './containers/Feed/Feed';
+import Discover from './containers/Feed/Discover';
+
 // Auth component imports
 import Login from './containers/Auth/Login';
 import Signup from './containers/Auth/SignUp';
@@ -11,7 +18,6 @@ import Activate from './containers/Auth/Activate';
 
 // Account component imports
 import AccountSearch from './containers/Account/AccountSearch';
-import MyAccount from './containers/Account/MyAccount';
 import AccountDetail from './containers/Account/AccountDetail';
 
 // Blog component imports
@@ -27,11 +33,12 @@ function App() {
       <Router>
         <Layout>
           <Switch>
-            <Route exact path='/' />
+            <Route exact path='/'                     component={ Home } />
+            <Route exact path='/my_account'           component={ MyAccount } />
 
             { /* Feed */ }
-            <Route exact path='/feed' />
-            <Route exact path='/discover' />
+            <Route exact path='/feed'                 component={ Feed } />
+            <Route exact path='/discover'             component={ Discover }/>
 
             { /* Auth routes */ }
             <Route exact path='/login'                component={ Login }/>
@@ -40,18 +47,12 @@ function App() {
 
             { /* Account routes */ }
             <Route exact path='/account/search'       component={ AccountSearch }/>
-            <Route exact path='/account/details'      component={ MyAccount} />
             <Route exact path='/account/:id'          component={ AccountDetail} />
 
             { /* Blog routes */ }
-            <Route exact path='/blog/create'          component= { BlogCreate} />
+            <Route exact path='/blog/create'          component={ BlogCreate } />
             <Route exact path='/blog/search'          component={ BlogSearch } />
             <Route exact path='/blog/:id'             component={ Blog } />
-            
-
-            { /* Comment routes */ }
-            <Route exact path='/comment/:id' />
-
           </Switch>
         </Layout>
       </Router>

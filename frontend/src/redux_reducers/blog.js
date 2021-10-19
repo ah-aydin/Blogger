@@ -15,7 +15,10 @@ import {
     POST_COMMENT_SUCCESS,
     POST_COMMENT_FAIL,
     DELETE_COMMENT_SUCCESS,
-    DELETE_COMMENT_FAIL
+    DELETE_COMMENT_FAIL,
+
+    CREATE_BLOG_SUCCESS,
+    CREATE_BLOG_FAIL
 } from '../redux_actions/blog_types';
 
 const initialState = {
@@ -157,6 +160,8 @@ export default function (state=initialState, action) {
             };
         case DELETE_COMMENT_FAIL:
         case POST_COMMENT_FAIL:
+        case CREATE_BLOG_SUCCESS:
+        case CREATE_BLOG_FAIL:
         default:
             return state
     }

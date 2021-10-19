@@ -21,16 +21,16 @@ const AccountSearch = ({ accounts, search_accounts_next, search_accounts }) => {
                 <input type='text' onChange={(e) => onChange(e)}></input>
                 <button type='submit'>Search<i className='bx bx-search'></i></button>
             </form>
-            <div>
-                <h1> ACCOUNT LIST </h1>
+            <ul>
                 {accounts.results.map((account) => {
                     return (
-                        <Link to={`${account.id}`}>
+                        <li><Link to={`${account.id}`}>
                             <h3>{ account.name } { account.last_name }</h3>
-                        </Link>
+                            <p>Follower Count { account.follower_count } </p>
+                        </Link></li>
                     )
                 })}
-            </div>
+            </ul>
             {accounts.next ? <button onClick={ (e) => search_accounts_next(accounts.next) }>Load more</button> : <div /> }
         </div>
     );

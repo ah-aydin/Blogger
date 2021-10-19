@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import react from 'react';
 import { connect } from 'react-redux';
 
 const MyAccount = ({ }) => {
@@ -8,10 +7,10 @@ const MyAccount = ({ }) => {
             <h1>My account</h1>
         </div>
     );
-};
+}
 
 const mapStateToProps = (state) => ({
-    
+
 });
 
 export default connect(mapStateToProps, { })(MyAccount);

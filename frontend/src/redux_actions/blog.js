@@ -13,7 +13,9 @@ import {
     POST_COMMENT_SUCCESS,
     POST_COMMENT_FAIL,
     DELETE_COMMENT_FAIL,
-    DELETE_COMMENT_SUCCESS
+    DELETE_COMMENT_SUCCESS,
+    CREATE_BLOG_SUCCESS,
+    CREATE_BLOG_FAIL
 } from './blog_types';
 
 /**
@@ -199,6 +201,49 @@ export const delete_comment = (comment_id) => async dispatch => {
         dispatch({
             type: DELETE_COMMENT_FAIL,
             payload: e.response
+        })
+    }
+}
+
+/**
+ * TODO add in the publish_date as an argument from the form in the future
+ * for now just leave the default value for testing purpouses. 
+ * Create's a blog with the given parameters owned by the authenticated user
+ * @param title Title of the blog
+ * @param subtitle Subtitle of the blog
+ * @param body Main contents of the blog
+ * @param publish_date Publish date of the blog
+ * @param tags A list of tags for the blog
+ * @returns 
+ */
+export const create_blog = (title, subtitle, body, publish_date='2021-10-10T00:00:00', tags = []) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        }
+    };
+
+    // Craete the slug from the title by making it all loweracsse and replace
+    // the spaces with '-'
+    const slug = title.toLowerCase().replaceAll(' ', '-');
+    const data = {
+        'title': title,
+        'subtitle': subtitle,
+        'slug': slug,
+        'body': body,
+        'publish_date': publish_date,
+        'tag_names': tags
+    }
+
+    try {
+        await axios.post(`${process.env.REACT_APP_URL}api/blog/`, data, config);
+        dispatch({
+            type: CREATE_BLOG_SUCCESS
+        });
+    } catch (e) {
+        dispatch({
+            type: CREATE_BLOG_FAIL
         })
     }
 }

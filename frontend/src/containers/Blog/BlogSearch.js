@@ -21,17 +21,16 @@ const BlogSearch = ({ search_blogs, search_blogs_next, blogs }) => {
                 <input type='text' onChange={(e) => onChange(e)}></input>
                 <button type='submit'>Search<i className='bx bx-search'></i></button>
             </form>
-            <div>
-                <h1> BLOG LIST </h1>
+            <ul>
                 {blogs.results.map((blog) => {
                     return (
-                        <Link to={`${blog.id}`}>
+                        <li><Link to={`${blog.id}`}>
                             <h3>{ blog.title }</h3>
-                            <p>{ blog.body }</p>
-                        </Link>
+                            <p>{ blog.subtitle }</p>
+                        </Link></li>
                     )
                 })}
-            </div>
+            </ul>
             {blogs.next ? <button onClick={ (e) => search_blogs_next(blogs.next) }>Load more</button> : <div /> }
         </div>
     );

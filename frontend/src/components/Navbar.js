@@ -30,9 +30,12 @@ const Navbar = ({ logout, isAuthenticated }) => {
                     <li><Link to='/feed'>
                         <span>Feed</span>
                     </Link></li>
+                    <li><Link to='/my_account'>
+                        <span>My account</span>
+                    </Link></li>
                 </Fragment>
             );
-        return (<Fragment />)
+        return (<Fragment />);
     }
 
     const authLinks2 = () => {
@@ -56,6 +59,9 @@ const Navbar = ({ logout, isAuthenticated }) => {
         <div>
             <ul>
                 { guestLinks() }
+                <li><Link to='/'>
+                    <span>Home</span>
+                </Link></li>
                 { authLinks1() }
                 <li><Link to='/discover'>
                     <span>Discover</span>

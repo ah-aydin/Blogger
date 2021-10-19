@@ -15,6 +15,7 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
         source='author',
         read_only=True
     )
+    publish_date = serializers.DateTimeField(required=False)
     class Meta:
         model = Blog
         fields = (

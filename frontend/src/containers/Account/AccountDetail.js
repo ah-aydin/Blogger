@@ -16,9 +16,10 @@ const AccountDetail = ({
 }) => {
     const [isFollowing, setIsFollowing] = useState(false);
 
+    // Run when the pages is loaded and when the id parameter changes
     useEffect(() => {
         get_account(match.params.id);
-    }, []);
+    }, [match.params.id]);
 
     // Get the blogs and followers when the account is retrieved
     // Also check if the authenticated user is following the account
@@ -41,7 +42,6 @@ const AccountDetail = ({
             } else {
                 setIsFollowing(false);
             }
-            console.log(isFollowing);
         })
         .catch(err => {
             setIsFollowing(false);
@@ -77,7 +77,10 @@ const AccountDetail = ({
                     followers.results.map((follower, id) => {
                         return (
                             <li>
-                                <Link to={`/account/${follower.follower_id}`}>{follower.follower_name} {follower.follower_last_name}</Link>
+                                <Link  
+                                    to={`/account/${follower.follower_id}`}>
+                                        {follower.follower_name} {follower.follower_last_name}
+                                </Link>
                             </li>
                         )
                     })

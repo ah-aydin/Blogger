@@ -38,8 +38,8 @@ const Blog = ({ match,
                 <form onSubmit={(e) => onSubmit(e)}>
                     <h3>Post comment</h3>
                     <div>
-                        <input 
-                            type='text' placeholder='Comment...' id='comment' name='comment' 
+                        <textarea 
+                            placeholder='Comment...' id='comment' name='comment' cols="50" rows="10" 
                             value={commentText} onChange={(e) => onChange(e)} required
                         />
                     </div>
@@ -97,7 +97,9 @@ const Blog = ({ match,
                 <div>
                     { /* Main part of the blog */ }
                     <div>
-                        <h3>{ blog.title }</h3>
+                        <span>Publish date: {blog.date_created}</span>
+                        <h2>{ blog.title }</h2>
+                        <h5>{ blog.subtitle }</h5>
                         <p>{ blog.body }</p>
                     </div>
                     { /* Posting comment section */ }
