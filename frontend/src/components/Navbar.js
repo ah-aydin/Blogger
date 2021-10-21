@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -7,15 +7,15 @@ import { logout } from '../redux_actions/auth';
 const Navbar = ({ logout, isAuthenticated }) => {
 
     const guestLinks = () => {
-        if (!isAuthenticated) 
+        if (!isAuthenticated)
             return (
                 <Fragment>
-                    <li><Link to='/login'>
-                        <span>Login</span>
-                    </Link></li>
-                    <li><Link to='/signup'>
-                        <span>Sign up</span>
-                    </Link></li>
+                    <li className='nav-item'>
+                        <Link to='/login' id='login' className='nav-link' >Login</Link>
+                    </li>
+                    <li className='nav-item'>
+                        <Link to='/signup' id='sign-up' className='nav-link' >Sign up</Link>
+                    </li>
                 </Fragment>
             );
         return (
@@ -27,57 +27,64 @@ const Navbar = ({ logout, isAuthenticated }) => {
         if (isAuthenticated)
             return (
                 <Fragment>
-                    <li><Link to='/feed'>
-                        <span>Feed</span>
-                    </Link></li>
-                    <li><Link to='/my_account'>
-                        <span>My account</span>
-                    </Link></li>
+                    <li className='nav-item'>
+                        <Link to='/feed' id='feed' className='nav-link' >Feed</Link>
+                    </li>
+                    <li className='nav-item'>
+                        <Link to='/my_account' id='my-account' className='nav-link' >My account</Link>
+                    </li>
                 </Fragment>
             );
         return (<Fragment />);
     }
 
     const authLinks2 = () => {
-        if (isAuthenticated) 
+        if (isAuthenticated)
             return (
                 <Fragment>
-                    <li><Link to='/blog/create'>
-                        <span>Create blog</span>
-                    </Link></li>
-                    <li><Link onClick={ logout }>
-                        <span>Logout</span>
-                    </Link></li>
+                    <li className='nav-item'>
+                        <Link to='/blog/create' id='create-blog' className='nav-link' >Create blog</Link>
+                    </li>
+                    <li className='nav-item'>
+                        <Link onClick={logout} id='logout' className='nav-link'>Logout</Link>
+                    </li>
                 </Fragment>
             );
         return (
             <Fragment />
         );
     }
-    
+
     return (
-        <div>
-            <ul>
-                { guestLinks() }
-                <li><Link to='/'>
-                    <span>Home</span>
-                </Link></li>
-                { authLinks1() }
-                <li><Link to='/discover'>
-                    <span>Discover</span>
-                </Link></li>
-                <li>
-                    Search
-                    <ul>
-                        <li><Link to='/account/search'><span>Account search</span></Link></li>
+        <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+            <div className='container-fluid'>
+                <a className='navbar-brand' href='#'>Blogger</a>
+                <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+                    <span className='navbar-toggler-icon'></span>
+                </button>
+                <div className='collapse navbar-collapse' id='navbarSupportedContent'>
+                    <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
+                        <li className='nav-item'>
+                            <Link to='/' className='nav-link' id='home' >Home</Link>
+                        </li>
+                        {guestLinks()}
+                        {authLinks1()}
+                        <li className='nav-item dropdown'>
+                            <a className='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                                Search
+                            </a>
+                            <ul className='dropdown-menu' aria-labelledby='navbarDropdown'>
+                                <li><Link className='dropdown-item' to='/account/search'>Account</Link></li>
+                                <li><Link className='dropdown-item' to='/blog/search'>Blog</Link></li>
+                                <li><hr className='dropdown-divider' /></li>
+                                <li><a className='dropdown-item' href='#'>Something else here</a></li>
+                            </ul>
+                        </li>
+                        {authLinks2()}
                     </ul>
-                    <ul>
-                        <li><Link to='/blog/search'><span>Blog search</span></Link></li>
-                    </ul>
-                </li>
-                { authLinks2() }
-            </ul>
-        </div>
+                </div>
+            </div>
+        </nav>
     )
 }
 

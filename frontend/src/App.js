@@ -9,7 +9,6 @@ import MyAccount from './containers/MyAccount';
 
 // Feed imports
 import Feed from './containers/Feed/Feed';
-import Discover from './containers/Feed/Discover';
 
 // Auth component imports
 import Login from './containers/Auth/Login';
@@ -34,11 +33,8 @@ function App() {
         <Layout>
           <Switch>
             <Route exact path='/'                     component={ Home } />
-            <Route exact path='/my_account'           component={ MyAccount } />
-
-            { /* Feed */ }
             <Route exact path='/feed'                 component={ Feed } />
-            <Route exact path='/discover'             component={ Discover }/>
+            <Route exact path='/my_account'           component={ MyAccount } />
 
             { /* Auth routes */ }
             <Route exact path='/login'                component={ Login }/>

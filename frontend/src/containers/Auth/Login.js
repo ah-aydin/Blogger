@@ -31,21 +31,21 @@ const Login = ({ login, isAuthenticated }) => {
             <form onSubmit={(e) => onSubmit(e)}>
                 <h1>Login</h1>
                 <p>Login to you're account</p>
-                <div>
-                    <label>Email address</label>
-                    <input 
+                <div className='form-group'>
+                    <label for='email'>Email address</label>
+                    <input className='form-control'
                         type='email' placeholder='example@gmail.com' id='email' name='email' 
                         value={email} onChange={(e) => onChange(e)} required
                     />
                 </div>
-                <div>
-                    <label>Password</label>
-                    <input 
+                <div className='form-group'>
+                    <label for='password'>Password</label>
+                    <input className='form-control'
                         type='password' placeholder='Password' id='password' name='password'
                         value={password} onChange={(e) => onChange(e)} required
                     />
                 </div>
-                <button type='submit'>Login</button>
+                <button type='submit' className='submit-button'>Login</button>
                 <p>Don't have an account? <Link to='/signup'>Sign up</Link></p>
             </form>
             <Logs />

@@ -17,7 +17,7 @@ const Activate = ({ activate, match }) => {
     return (
         <div>
             <h1>Activate you're account</h1>
-            <button onClick={activate_account}>Activate</button>
+            <button onClick={activate_account} class='submit-button'>Activate</button>
             <Logs />
             <Link to='/'> Go back to home page </Link>
         </div>

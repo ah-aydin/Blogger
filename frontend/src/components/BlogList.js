@@ -10,7 +10,7 @@ const BlogList = ({ blogs, next_list }) => {
                     <BlogSnippet blog={ blog } />
                 )
             })}
-            {blogs.next ? <button onClick={ (e) => next_list(blogs.next) }>Load more</button> : <div /> }
+            {blogs.next ? <button className='btn btn-primary btn-block' onClick={ (e) => next_list(blogs.next) }>Load more</button> : <div /> }
         </ul>
     )
 };

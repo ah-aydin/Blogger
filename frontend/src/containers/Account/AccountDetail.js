@@ -73,26 +73,6 @@ const AccountDetail = ({
         );
     }
 
-    const getFollowers = () => {
-        return (
-            <ul>
-                {
-                    followers.results.map((follower, id) => {
-                        return (
-                            <li>
-                                <Link  
-                                    to={`/account/${follower.follower_id}`}>
-                                        {follower.follower_name} {follower.follower_last_name}
-                                </Link>
-                            </li>
-                        )
-                    })
-                }
-                {followers.next ? <li><button onClick={ (e) => get_account_followers_next(followers.next)}>Load Mode</button></li> : <div /> }
-            </ul>
-        );
-    }
-
     return (
         <div>
             {

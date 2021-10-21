@@ -2,12 +2,15 @@ import React from 'react';
 
 import Navbar from '../components/Navbar';
 
-// TODO Add styling
 const Layout = (props) => {
     return (
         <div>
             <Navbar />
-            { props.children }
+            <div className='row justify-content-center'>
+                <div className='col-md-10 layout'>
+                    { props.children }
+                </div>
+            </div>
         </div>
     );
 };

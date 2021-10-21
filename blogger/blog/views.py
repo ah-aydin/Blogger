@@ -5,6 +5,8 @@ from .models import Blog, Comment, Tag
 from .serializers import BlogSerializer, TagSerializer, CommentSerializer
 from .permissions import IsOwnerOrReadOnly, ReadOnly
 
+from account.models import Account
+
 class BlogList(generics.ListCreateAPIView):
     """
     GET - Returns a list of all available blogs.
@@ -15,6 +17,11 @@ class BlogList(generics.ListCreateAPIView):
     serializer_class = BlogSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'body', 'author__email']
+
+    def perform_create(self, serializer):
+        self.request.user.blog_count += 1
+        self.request.user.save()
+        return super().perform_create(serializer)
 
     def perform_create(self, serializer):
         """
@@ -152,3 +159,23 @@ class AccountCommentList(generics.ListAPIView):
     search_fields = ['body']
     def get_queryset(self):
         return Comment.objects.filter(author__pk=self.kwargs['pk'])
+
+class AccountFollowingBlogList(generics.ListAPIView):
+    """
+    GET - Returns the list of blogs that belong to the given users followings
+    """
+    serializer_class = BlogSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['title', 'body', 'author__email']
+
+    def get_queryset(self):
+        # Get follows of the account
+        follows = Account.objects.get(pk=self.kwargs['pk']).follows.all()
+        # Get accounts
+        accounts = []
+        for follow in follows:
+            accounts.append(follow.follows)
+
+        blogs = Blog.objects.filter(author__in=accounts)
+        return blogs
+

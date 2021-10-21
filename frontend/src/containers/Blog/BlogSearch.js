@@ -19,10 +19,20 @@ const BlogSearch = ({ search_blogs, search_blogs_next, blogs }) => {
     return (
         <div>
             <h1>Blog search</h1>
-            <form onSubmit={onSubmit}>
-                <input type='text' onChange={(e) => onChange(e)}></input>
-                <button type='submit'>Search<i className='bx bx-search'></i></button>
+            <form onSubmit={onSubmit} className='form'>
+                <div className='row'>
+                    <div className='col-md-11'>
+                        <div className='form-group mb-2'>
+                            <label for='keyword' class='sr-only'>Search</label>
+                            <input className='form-control' type='text' id='keyword' onChange={(e) => onChange(e)}></input>
+                        </div>  
+                    </div>
+                    <div className='col-md-1'>
+                        <button type='submit' className='submit-button mb-2'>Search</button>
+                    </div>
+                </div>
             </form>
+            
             <BlogList blogs={ blogs } next_list={ search_blogs_next }/>
         </div>
     );

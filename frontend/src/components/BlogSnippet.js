@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const BlogSnippet = ({ blog }) => {
     return(
-        <li>
+        <li className='card p-2 mb-2'>
             <Link to={`/blog/${blog.id}`}>
                 <h3>{ blog.title }</h3>
                 <p>{ blog.subtitle }</p>

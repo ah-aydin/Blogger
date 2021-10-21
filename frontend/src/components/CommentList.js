@@ -15,7 +15,7 @@ const CommentList = ({ comments, get_blog_comments_next }) => {
                     );
                 })
             }
-            { comments.next ? <button onClick={ (e) => get_blog_comments_next(comments.next) }>Load more</button> : <div /> }
+            { comments.next ? <button className='btn btn-primary btn-block' onClick={ (e) => get_blog_comments_next(comments.next) }>Load more</button> : <div /> }
         </ul>
     )
 }
