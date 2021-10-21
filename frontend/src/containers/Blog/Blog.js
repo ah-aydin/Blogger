@@ -38,14 +38,14 @@ const Blog = ({ match,
         if (isAuthenticated) {
             return (
                 <form onSubmit={(e) => onSubmit(e)}>
-                    <h3>Post comment</h3>
-                    <div>
-                        <textarea 
-                            placeholder='Comment...' id='comment' name='comment' cols="50" rows="10" 
+                    <h4>Write a comment</h4>
+                    <div className='mb-3'>
+                        <textarea className='form-control'
+                            placeholder='Comment...' id='comment' name='comment' rows='3' 
                             value={commentText} onChange={(e) => onChange(e)} required
                         />
                     </div>
-                    <button type='submit'>Post</button>
+                    <button type='submit' className='btn btn-primary btn-block mb-2'>Comment</button>
                 </form>
             );
         }
@@ -61,7 +61,12 @@ const Blog = ({ match,
                 <div>
                     { /* Main part of the blog */ }
                     <div>
-                        <span>Publish date: {blog.date_created}</span>
+                        <div className='row'>
+                            <div className='col'>
+                                <span>Published on {blog.date_created}, by</span>
+                                <Link to={`/account/${blog.author_id}`} className='ms-2'>{blog.author_name} {blog.author_last_name}</Link>
+                            </div>
+                        </div>
                         <h2>{ blog.title }</h2>
                         <h5>{ blog.subtitle }</h5>
                         <p>{ blog.body }</p>

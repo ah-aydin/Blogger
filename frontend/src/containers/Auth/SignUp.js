@@ -31,45 +31,45 @@ const SignUp = ({ signup, isAuthenticated }) => {
 
     return (
         <div>
-            <form onSubmit={(e) => onSubmit(e)}>
+            <form className='' onSubmit={(e) => onSubmit(e)}>
                 <h1>Signup</h1>
                 <p>Login to you're account</p>
-                <div className='form-group'>
-                    <label for='email'>Email address</label>
+                <div className='mb-3'>
+                    <label for='email' class='form-label'>Email address</label>
                     <input className='form-control'
                         type='email' placeholder='example@gmail.com' id='email' name='email' 
                         value={email} onChange={(e) => onChange(e)} required
                     />
                 </div>
-                <div className='form-group'>
-                    <label for='name'>Name</label>
+                <div className='mb-3'>
+                    <label for='name' class='form-label'>Name</label>
                     <input className='form-control'
                         type='text' placeholder='John' id='name' name='name'
                         value={name} onChange={(e) => onChange(e)} required
                     />
                 </div>
-                <div className='form-group'>
-                    <label for='last_name'>Last name</label>
+                <div className='mb-3'>
+                    <label for='last_name' class='form-label'>Last name</label>
                     <input className='form-control'
                         type='text' placeholder='Doe' id='last_name' name='last_name'
                         value={last_name} onChange={(e) => onChange(e)} required
                     />
                 </div>
-                <div className='form-group'>
-                    <label for='password'>Password</label>
+                <div className='mb-3'>
+                    <label for='password' class='form-label'>Password</label>
                     <input className='form-control'
                         type='password' placeholder='Password' id='password' name='password'
                         value={password} onChange={(e) => onChange(e)} required
                     />
                 </div>
-                <div className='form-group'>
-                    <label for='re_password'>Repeat password</label>
+                <div className='mb-3'>
+                    <label for='re_password' class='form-label'>Repeat password</label>
                     <input className='form-control'
                         type='password' placeholder='Password' id='re_password' name='re_password'
                         value={re_password} onChange={(e) => onChange(e)} required
                     />
                 </div>
-                <button type='submit' className='submit-button'>Sign up</button>
+                <button type='submit' className='btn btn-primary btn-block mb-2'>Sign up</button>
                 <p>Have an account? <Link to='/login'>Log in</Link></p>
             </form>
             <Logs />

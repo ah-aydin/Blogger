@@ -11,10 +11,10 @@ const Navbar = ({ logout, isAuthenticated }) => {
             return (
                 <Fragment>
                     <li className='nav-item'>
-                        <Link to='/login' id='login' className='nav-link' >Login</Link>
+                        <Link to='/login' id='login' className='nav-link'><i class="bi bi-box-arrow-in-right"></i> Login</Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to='/signup' id='sign-up' className='nav-link' >Sign up</Link>
+                        <Link to='/signup' id='sign-up' className='nav-link'><i class="bi bi-person-plus-fill"></i> Sign up</Link>
                     </li>
                 </Fragment>
             );
@@ -23,15 +23,24 @@ const Navbar = ({ logout, isAuthenticated }) => {
         );
     }
 
+    const authLinks0 = () => {
+        if (isAuthenticated)
+            return (
+                <Fragment>
+                    <li className='nav-item'>
+                        <Link to='/' className='nav-link' id='home' ><i class="bi bi-house-door-fill"></i> Home</Link>
+                    </li>
+                </Fragment>
+            );
+        return (<Fragment />);
+    }
+
     const authLinks1 = () => {
         if (isAuthenticated)
             return (
                 <Fragment>
                     <li className='nav-item'>
-                        <Link to='/feed' id='feed' className='nav-link' >Feed</Link>
-                    </li>
-                    <li className='nav-item'>
-                        <Link to='/my_account' id='my-account' className='nav-link' >My account</Link>
+                        <Link to='/my_account' id='my-account' className='nav-link'><i class="bi bi-person-fill"></i> My account</Link>
                     </li>
                 </Fragment>
             );
@@ -43,10 +52,10 @@ const Navbar = ({ logout, isAuthenticated }) => {
             return (
                 <Fragment>
                     <li className='nav-item'>
-                        <Link to='/blog/create' id='create-blog' className='nav-link' >Create blog</Link>
+                        <Link to='/blog/create' id='create-blog' className='nav-link'><i class="bi bi-plus-square-fill"></i> Create blog</Link>
                     </li>
                     <li className='nav-item'>
-                        <Link onClick={logout} id='logout' className='nav-link'>Logout</Link>
+                        <Link onClick={logout} id='logout' className='nav-link'><i class="bi bi-box-arrow-left"></i> Logout</Link>
                     </li>
                 </Fragment>
             );
@@ -58,26 +67,25 @@ const Navbar = ({ logout, isAuthenticated }) => {
     return (
         <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <div className='container-fluid'>
-                <a className='navbar-brand' href='#'>Blogger</a>
+                <Link className='navbar-brand' to='/'>Blogger</Link>
                 <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
                     <span className='navbar-toggler-icon'></span>
                 </button>
                 <div className='collapse navbar-collapse' id='navbarSupportedContent'>
                     <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
+                        {authLinks0()}
                         <li className='nav-item'>
-                            <Link to='/' className='nav-link' id='home' >Home</Link>
+                            <Link to='/discover' id='dicover' className='nav-link'><i class="bi bi-compass-fill"></i> Discover</Link>
                         </li>
                         {guestLinks()}
                         {authLinks1()}
                         <li className='nav-item dropdown'>
                             <a className='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                                Search
+                                <i class="bi bi-search"></i> Search
                             </a>
                             <ul className='dropdown-menu' aria-labelledby='navbarDropdown'>
-                                <li><Link className='dropdown-item' to='/account/search'>Account</Link></li>
-                                <li><Link className='dropdown-item' to='/blog/search'>Blog</Link></li>
-                                <li><hr className='dropdown-divider' /></li>
-                                <li><a className='dropdown-item' href='#'>Something else here</a></li>
+                                <li><Link className='dropdown-item' to='/account/search'><i class="bi bi-person-lines-fill"></i> Account</Link></li>
+                                <li><Link className='dropdown-item' to='/blog/search'><i class="bi bi-card-text"></i> Blog</Link></li>
                             </ul>
                         </li>
                         {authLinks2()}

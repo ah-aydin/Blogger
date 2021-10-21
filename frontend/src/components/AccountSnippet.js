@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 
 const AccountSnippet = ({ account }) => {
     return (
-        <li className='card p-2 mb-2'>
-            <Link to={`${account.id}`} >
-                <h3>{ account.name } { account.last_name }</h3>
-                <p>Follower Count { account.follower_count } </p>
+        <li>
+            <Link to={`/account/${account.id}`} className='card mb-3' style={{textDecoration: 'none'}}>
+                <div className='card-body'>
+                    <h5 className='card-title'>{account.name} {account.last_name}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Follower count: {account.follower_count}</h6>
+                </div>
             </Link>
         </li>
     )

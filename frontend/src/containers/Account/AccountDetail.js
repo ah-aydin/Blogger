@@ -63,7 +63,7 @@ const AccountDetail = ({
         return (<Fragment>
             {
                 isAuthenticated ? 
-                <div><button onClick={ (e) => onClickFollowButton() }>
+                <div><button className='btn btn-primary btn-block' onClick={ (e) => onClickFollowButton() }>
                     { isFollowing ? 'Following' : 'Follow' }
                 </button></div>
                 :
@@ -80,6 +80,7 @@ const AccountDetail = ({
                 <div>
                     <h1> {account.name} {account.last_name} </h1>
                     { getFollowButton() }
+                    <h3>Followers</h3>
                     <AccountList accounts={ followers } next_list={ get_account_followers_next } />
                     <h3>Blogs</h3>
                     <BlogList blogs={ blogs } next_list={ get_account_blogs_next } />

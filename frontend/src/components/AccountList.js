@@ -4,7 +4,7 @@ import AccountSnippet from './AccountSnippet';
 
 const AccountList = ({ accounts, next_list }) => {
     return(
-        <ul>
+        <ul className='mt-3'>
             {accounts.results.map((account) => {
                 return (
                     <AccountSnippet account={ account }/>

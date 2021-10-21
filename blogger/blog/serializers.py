@@ -15,6 +15,9 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
         source='author',
         read_only=True
     )
+    author_id = serializers.IntegerField(source='author.id', required=False)
+    author_name = serializers.CharField(source='author.name', required=False)
+    author_last_name = serializers.CharField(source='author.last_name', required=False)
     publish_date = serializers.DateTimeField(required=False)
     class Meta:
         model = Blog
@@ -22,7 +25,7 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
             'url', 'id', 'title', 'subtitle', 'slug',
             'body', 'date_created', 'date_modified',
             'publish_date', 'published', 
-            'author_url',
+            'author_url', 'author_id', 'author_name', 'author_last_name',
             'comments_url',
             'tags'
         )

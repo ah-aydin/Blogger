@@ -27,24 +27,24 @@ const BlogCreate = ({ isAuthenticated, create_blog }) => {
 
     return (
         <div>
-            <h1>Create blog</h1>
             <form onSubmit={(e) => onSubmit(e)}>
-                <div className='form-group'>
-                    <label for='title'>Title</label>
+                <h1>Create blog</h1>
+                <div className='mb-3'>
+                    <label for='title' className='form-label'>Title</label>
                     <input className='form-control' 
                     type='text' id='title' name='title' placeholder='Title'
                         value={title} onChange={(e) => onChange(e)} required
                     />
                 </div>
-                <div className='form-group'>
-                    <label for='subtitle'>Subtitle</label>
+                <div className='mb-3'>
+                    <label for='subtitle' className='form-label'>Subtitle</label>
                     <input className='form-control' 
                     type='text' id='subtitle' name='subtitle' placeholder='Subtitle'
                         value={subtitle} onChange={(e) => onChange(e)} required
                     />
                 </div>
-                <div className='form-group'>
-                    <label for='body'>Body</label>
+                <div className='mb-3'>
+                    <label for='body' className='form-label'>Body</label>
                     <textarea className='form-control'
                         placeholder='Body...' id='body' name='body' cols="50" rows="10" 
                         value={body} onChange={(e) => onChange(e)} required
