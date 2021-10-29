@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from .test_helpers import get_client, get_client_authenticated
-from .models import Follow
+from .models import Follow, Account
 
 class AccountTests(APITestCase):
     def setUp(self):
@@ -25,6 +25,21 @@ class AccountTests(APITestCase):
         """
         response = self.client.get(reverse('account-detail', kwargs={'pk': 1}))
         self.assertEqual(response.data['id'], self.account1.pk)
+    
+    def test_change_account_detail(self):
+        """
+        Ensure that the loged in user can change it's own information
+        """
+        response = self.client_authenticated.put(reverse('account-detail', kwargs={'pk': 1}), {
+            'name': 'meh',
+            'last_name': 'meh',
+            'email': 'email@gmail.com'
+        })
+
+        data = response.data
+        user = Account.objects.get(pk=1)
+        self.assertEqual((user.name, user.last_name, user.email), ('meh', 'meh', 'email@gmail.com'))
+        
 
 class FollowTests(APITestCase):
     def setUp(self):

@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import { signup } from '../../redux_actions/auth';
 
-import Logs from '../Logs/Logs';
-
 const SignUp = ({ signup, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         'email': '',
@@ -72,7 +70,6 @@ const SignUp = ({ signup, isAuthenticated }) => {
                 <button type='submit' className='btn btn-primary btn-block mb-2'>Sign up</button>
                 <p>Have an account? <Link to='/login'>Log in</Link></p>
             </form>
-            <Logs />
         </div>
     );
 };

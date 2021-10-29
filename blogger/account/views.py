@@ -14,7 +14,7 @@ class AccountList(generics.ListAPIView):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['email', 'name', 'last_name']
 
-class AccountDetail(generics.RetrieveAPIView):
+class AccountDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Returns details of one account from the supplied primary key
     """

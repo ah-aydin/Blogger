@@ -5,13 +5,13 @@ import { Provider } from 'react-redux';
 import Layout from './hocs/Layout';
 
 import Home from './containers/Home';
-import MyAccount from './containers/MyAccount';
 import Discover from './containers/Discover';
 
 // Auth component imports
 import Login from './containers/Auth/Login';
 import Signup from './containers/Auth/SignUp';
 import Activate from './containers/Auth/Activate';
+import MyAccount from './containers/Auth/MyAccount';
 
 // Account component imports
 import AccountSearch from './containers/Account/AccountSearch';
@@ -32,12 +32,12 @@ function App() {
           <Switch>
             <Route exact path='/'                     component={ Home } />
             <Route exact path='/discover'             component={ Discover } />
-            <Route exact path='/my_account'           component={ MyAccount } />
 
             { /* Auth routes */ }
             <Route exact path='/login'                component={ Login }/>
             <Route exact path='/signup'               component={ Signup }/>
             <Route exact path='/activate/:uid/:token' component={ Activate }/>
+            <Route exact path='/my_account'           component={ MyAccount } />
 
             { /* Account routes */ }
             <Route exact path='/account/search'       component={ AccountSearch }/>

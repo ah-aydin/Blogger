@@ -3,11 +3,11 @@ import React from 'react';
 import Success from './Success';
 import Error from './Error';
 
-const Logs = ({ errors }) => {
+const Logs = ({ successes, errors }) => {
     return (
         <div>
-            <Success />
-            <Error />
+            <Success successes={successes} />
+            <Error errors={errors}/>
         </div>
     )
 };

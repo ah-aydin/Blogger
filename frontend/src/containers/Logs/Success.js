@@ -13,8 +13,4 @@ const Success = ({ successes }) => {
     )
 }
 
-const mapStateToProps = (state) => ({
-    successes: state.auth.successes
-});
-
-export default connect(mapStateToProps, { })(Success);
+export default Success;

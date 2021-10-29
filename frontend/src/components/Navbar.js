@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { logout } from '../redux_actions/auth';
 
-const Navbar = ({ logout, isAuthenticated }) => {
+const Navbar = ({ logout, isAuthenticated, user }) => {
 
     const guestLinks = () => {
         if (!isAuthenticated)
@@ -64,6 +64,22 @@ const Navbar = ({ logout, isAuthenticated }) => {
         );
     }
 
+    const userData = () => {
+        if (isAuthenticated && user)
+            return (
+                <Fragment>
+                    <div className="row">
+                        <div className="col-md-12">
+                            Welcome, <Link to="/my_account" className="text-decoration-none"><b>{ user.name } {user.last_name}</b></Link>
+                        </div>
+                    </div>
+                </Fragment>
+            );
+        return (
+            <Fragment />
+        );
+    }
+
     return (
         <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <div className='container-fluid'>
@@ -90,6 +106,9 @@ const Navbar = ({ logout, isAuthenticated }) => {
                         </li>
                         {authLinks2()}
                     </ul>
+                    <div class="d-flex">
+                        {userData()}
+                    </div>
                 </div>
             </div>
         </nav>
@@ -97,7 +116,8 @@ const Navbar = ({ logout, isAuthenticated }) => {
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);
