@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -11,6 +10,8 @@ import {
 
 import AccountList from '../../components/AccountList';
 import BlogList from '../../components/BlogList';
+
+import '../../css/my_account.css';
 
 const AccountDetail = ({
     match,
@@ -76,15 +77,27 @@ const AccountDetail = ({
     return (
         <div>
             {
-                account ? 
-                <div>
-                    <h1> {account.name} {account.last_name} </h1>
-                    { getFollowButton() }
-                    <h3>Followers</h3>
-                    <AccountList accounts={ followers } next_list={ get_account_followers_next } />
-                    <h3>Blogs</h3>
-                    <BlogList blogs={ blogs } next_list={ get_account_blogs_next } />
-                </div>
+                account ?
+                    <Fragment>
+                        <div className='grid'>
+                            <form className='card mb-4 info-form p-2'>
+                                <h3>Account details</h3>
+                                <ul className='list-group list-group-flush fw-bolder'>
+                                    <li className='list-group-item d-flex p-auto'>Name: <p className='flex-fill text-end'>{ account.name }</p></li>
+                                    <li className='list-group-item d-flex p-auto'>Last name: <p className='flex-fill text-end'>{ account.last_name }</p></li>
+                                    <li className='list-group-item d-flex p-auto'>Date joined: <p className='flex-fill text-end'>{ account.date_joined }</p></li>
+                                    <li className='list-group-item d-flex p-auto'>Blog count: <p className='flex-fill text-end'>{ account.blog_count }</p></li>
+                                    <li className='list-group-item d-flex p-auto'>Follower count: <p className='flex-fill text-end'>{ account.follower_count} </p></li>
+                                </ul>
+                            </form>
+
+                            <div className='card follower-scroll'>
+                                <AccountList accounts={ followers } next_list={ get_account_followers_next }/>
+                            </div>
+                        </div>
+                        <h2 className='mt-3 mb-4'>Blogs</h2>
+                        <BlogList blogs={ blogs } next_list={ get_account_blogs_next }/>
+                    </Fragment>
                 :
                 <div><p>User with the given Id does not exist</p></div>
             }

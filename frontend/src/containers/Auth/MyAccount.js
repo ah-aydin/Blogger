@@ -1,11 +1,12 @@
 import react, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+
+import { change_user_data, get_user_followers_next, get_user_blogs_next } from '../../redux_actions/auth';
 
 import AccountList from '../../components/AccountList';
 import BlogList from '../../components/BlogList';
 import Logs from '../Logs/Logs';
-import { change_user_data, get_user_followers_next, get_user_blogs_next } from '../../redux_actions/auth';
 
 import '../../css/my_account.css';
 
