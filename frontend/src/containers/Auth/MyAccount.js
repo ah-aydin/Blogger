@@ -2,7 +2,7 @@ import react, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { change_user_data, get_user_followers_next, get_user_blogs_next } from '../../redux_actions/auth';
+import { change_user_data, get_user_followers_next, get_user_blogs_next, get_user_blogs, get_user_followers } from '../../redux_actions/auth';
 
 import AccountList from '../../components/AccountList';
 import BlogList from '../../components/BlogList';
@@ -101,4 +101,4 @@ const mapStateToProps = (state) => ({
     blogs: state.auth.blogs
 });
 
-export default connect(mapStateToProps, { change_user_data, get_user_followers_next, get_user_blogs_next })(MyAccount);
+export default connect(mapStateToProps, { change_user_data, get_user_followers_next, get_user_blogs_next, get_user_blogs, get_user_followers })(MyAccount);

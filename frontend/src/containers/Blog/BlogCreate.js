@@ -2,9 +2,11 @@ import react, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
+import Logs from '../Logs/Logs';
+
 import { create_blog } from '../../redux_actions/blog';
 
-const BlogCreate = ({ isAuthenticated, create_blog }) => {
+const BlogCreate = ({ isAuthenticated, succ, err, create_blog }) => {
     const [formData, setFormData] = useState({
         title: '',
         subtitle: '',
@@ -27,7 +29,7 @@ const BlogCreate = ({ isAuthenticated, create_blog }) => {
 
     return (
         <div>
-            <form onSubmit={(e) => onSubmit(e)}>
+            <form onSubmit={(e) => onSubmit(e)} className='mb-4'>
                 <h1>Create blog</h1>
                 <div className='mb-3'>
                     <label for='title' className='form-label'>Title</label>
@@ -52,12 +54,15 @@ const BlogCreate = ({ isAuthenticated, create_blog }) => {
                 </div>
                 <button type='subimt' className='btn btn-primary btn-block'>Post blog</button>
             </form>
+            <Logs successes={ succ } errors={ err } />
         </div>
     );
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    succ: state.blog.successes,
+    err: state.blog.errors
 });
 
 export default connect(mapStateToProps, { create_blog })(BlogCreate);

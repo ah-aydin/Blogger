@@ -69,7 +69,7 @@ const Blog = ({ match,
                         </div>
                         <h2>{ blog.title }</h2>
                         <h5>{ blog.subtitle }</h5>
-                        <p>{ blog.body }</p>
+                        <p style={{'word-wrap': 'break-word'}}>{ blog.body }</p>
                     </div>
                     { /* Posting comment section */ }
                     { getCommentPosting() }

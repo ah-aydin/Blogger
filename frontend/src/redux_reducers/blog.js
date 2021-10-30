@@ -161,7 +161,17 @@ export default function (state=initialState, action) {
         case DELETE_COMMENT_FAIL:
         case POST_COMMENT_FAIL:
         case CREATE_BLOG_SUCCESS:
+            return {
+                ...state,
+                successes: ['Blog created'],
+                errors: []
+            };
         case CREATE_BLOG_FAIL:
+            return {
+                ...state,
+                successes: [],
+                errors: ['Blog with his title allready exists']
+            }
         default:
             return state
     }
