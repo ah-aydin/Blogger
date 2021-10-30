@@ -34,7 +34,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost', 
-    '127.0.0.1'
+    '127.0.0.1',
+    'ahamza-blogger.herokuapp.com',
 ]
 
 # CORS
@@ -42,7 +43,8 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://localhost:8000",
-    "http://127.0.0.1:8000"
+    "http://127.0.0.1:8000",
+    'https://ahamza-blogger.herokuapp.com',
 ]
 
 # Application definition
@@ -73,6 +75,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -157,13 +162,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     # Directory to the react build
     join(join(BASE_DIR, 'build'), 'static'),
-    
-    # Directory to the stored images
-    join(BASE_DIR, 'static'),
 ]
 
 # Default primary key field type

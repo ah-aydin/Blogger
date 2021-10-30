@@ -1,6 +1,8 @@
 Blogging app
 ============
 
+Visit https://ahamza-blogger.herokuapp.com/ for working demo.
+
 Basic blog app made using django python for backend and react for frontend
 
 Setting up python environment
