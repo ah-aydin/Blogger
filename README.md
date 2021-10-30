@@ -8,7 +8,7 @@ Setting up python environment
 
 First create a python virtual envornment on the root directory of the project, then run this command after activation:
 
-    pip install django djangorestframework django-filter djoser djangorestframework_simplejwt python-dotenv django-richtextfield
+    pip install django djangorestframework django-filter djoser djangorestframework_simplejwt python-dotenv django-richtextfield django-cors-headers
 
 Setting up React/Redux environment
 ----------------------------------
