@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'djrichtextfield',
 
     # Custom apps
     'account',
@@ -152,7 +153,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
+    # Directory to the react build
     join(join(BASE_DIR, 'build'), 'static'),
+    
+    # Directory to the stored images
+    join(BASE_DIR, 'static'),
 ]
 
 # Default primary key field type

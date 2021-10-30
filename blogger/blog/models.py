@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.db.models.fields.related import ForeignKey
+from djrichtextfield.models import RichTextField
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -12,7 +12,7 @@ class Blog(models.Model):
     title           = models.CharField(max_length=255, unique=True)
     subtitle        = models.CharField(max_length=255, blank=True)
     slug            = models.SlugField(max_length=255, unique=True)
-    body            = models.TextField()
+    body            = RichTextField()
     date_created    = models.DateField(auto_now_add=True)
     date_modified   = models.DateField(auto_now=True)
     publish_date    = models.DateTimeField(blank=True, null=True)

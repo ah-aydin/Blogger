@@ -14,6 +14,9 @@ urlpatterns = [
     path('api/account/', include('account.urls')),
     path('api/blog/', include('blog.urls')),
 
+    # Rich text field
+    path('djrichtextfield/', include('djrichtextfield.urls')),
+
     # React/redux frontend build
     re_path('^.*', TemplateView.as_view(template_name='index.html')),
 ]
