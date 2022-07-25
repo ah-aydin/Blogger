@@ -35,10 +35,12 @@ Running the local server
 
 In order to run the project, a ``.env`` file at ``./blogger/blogger`` is needed. This will hold crutial information like the ``secret key``, ``email host user`` and ``email host password``. The file should contain variables as follows:
 
-@ -74,6 +74,12 @@ In order to run the project, a ``.env`` file at ``./blogger/blogger`` is needed.
+In order to run the project, a ``.env`` file at ``./blogger/blogger`` is needed.
+```
+    SECRET_KEY = "Secret key plz"
     EMAIL_HOST_USER = "You're email address for sending out activation/confimation mails"
     EMAIL_HOST_PASSWORD = "You're email's application password"
-
+```
 ### ``.env`` file for frontend
 
 In adition to the backend ``.env`` file we need to add one more at ``./frontend``. This file will contain the ``REACT_APP_URL``, which should hold the url address for you're backend server. If you run it locally with default settings, this should be as follows
